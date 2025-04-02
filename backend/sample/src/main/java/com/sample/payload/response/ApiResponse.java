@@ -8,14 +8,13 @@ import lombok.ToString;
 @ToString
 @Data
 public class ApiResponse {
-
-    @Schema( type = "boolean", example = "true", description="올바르게 로직을 처리했으면 True, 아니면 False를 반환합니다.")
+    @Schema(type = "boolean", example = "true", description = "올바르게 처리되었으면 True, 아니면 False")
     private boolean check;
-    
-    @Schema( type = "object", example = "information", description="restful의 정보를 감싸 표현합니다. object형식으로 표현합니다.")
+
+    @Schema(type = "object", example = "information", description = "처리 결과 정보")
     private Object information;
-    
-    public ApiResponse(){};
+
+    public ApiResponse() {}
 
     @Builder
     public ApiResponse(boolean check, Object information) {

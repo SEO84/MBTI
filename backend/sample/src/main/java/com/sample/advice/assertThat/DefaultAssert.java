@@ -12,56 +12,63 @@ import com.sample.advice.payload.ErrorCode;
 import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 
-public class DefaultAssert extends Assert{
+public class DefaultAssert extends Assert {
 
-    public static void isTrue(boolean value){
-        if(!value){
+    public static void isTrue(boolean value) {
+        if (!value) {
             throw new DefaultException(ErrorCode.INVALID_CHECK);
         }
     }
 
-    public static void isTrue(boolean value, String message){
-        if(!value){
+    public static void isTrue(boolean value, String message) {
+        if (!value) {
             throw new DefaultException(ErrorCode.INVALID_CHECK, message);
         }
     }
 
-    public static void isValidParameter(Errors errors){
-        if(errors.hasErrors()){
+    public static void isValidParameter(Errors errors) {
+        if (errors.hasErrors()) {
             throw new InvalidParameterException(errors);
         }
     }
-    
-    public static void isObjectNull(Object object){
-        if(object == null){
+
+    public static void isObjectNull(Object object) {
+        if (object == null) {
             throw new DefaultNullPointerException(ErrorCode.INVALID_CHECK);
         }
     }
 
-    public static void isListNull(List<Object> values){
-        if(values.isEmpty()){
+    public static void isListNull(List<Object> values) {
+        if (values.isEmpty()) {
             throw new DefaultException(ErrorCode.INVALID_FILE_PATH);
         }
     }
 
-    public static void isListNull(Object[] values){
-        if(values == null){
+    public static void isListNull(Object[] values) {
+        if (values == null) {
             throw new DefaultException(ErrorCode.INVALID_FILE_PATH);
         }
     }
 
-    public static void isOptionalPresent(Optional<?> value){
-        if(!value.isPresent()){
+    public static void isOptionalPresent(Optional<?> value) {
+        if (!value.isPresent()) {
             throw new DefaultException(ErrorCode.INVALID_PARAMETER);
         }
     }
 
-    public static void isAuthentication(String message){
+    public static void isAuthentication(String message) {
         throw new DefaultAuthenticationException(message);
     }
 
-    public static void isAuthentication(boolean value){
-        if(!value){
+    public static void isAuthentication(boolean value) {
+        if (!value) {
+            throw new DefaultAuthenticationException(ErrorCode.INVALID_AUTHENTICATION);
+        }
+    }
+
+    // 새로운 메서드 추가: assertAuthentication
+    public static void assertAuthentication(boolean value) {
+        if (!value) {
             throw new DefaultAuthenticationException(ErrorCode.INVALID_AUTHENTICATION);
         }
     }

@@ -2,8 +2,6 @@ package com.sample.service.auth;
 
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import com.sample.advice.assertThat.DefaultAssert;
 import com.sample.config.security.token.UserPrincipal;
 import com.sample.domain.entity.user.User;
@@ -18,27 +16,24 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new UsernameNotFoundException("유저 정보를 찾을 수 없습니다.")
-        );
+                .orElseThrow(() -> new UsernameNotFoundException("유저 정보를 찾을 수 없습니다."));
+
+        // Optional이 비어있지 않은지 확인
+        DefaultAssert.isOptionalPresent(Optional.of(user));
 
         return UserPrincipal.create(user);
     }
 
-    @Transactional
     public UserDetails loadUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         DefaultAssert.isOptionalPresent(user);
-
         return UserPrincipal.create(user.get());
     }
-    
 }

@@ -18,10 +18,14 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     private final UserRepository userRepository;
 
-    public ResponseEntity<?> readByUser(UserPrincipal userPrincipal){
+    public ResponseEntity<?> readByUser(UserPrincipal userPrincipal) {
         Optional<User> user = userRepository.findById(userPrincipal.getId());
-        DefaultAssert.isOptionalPresent(user);
-        ApiResponse apiResponse = ApiResponse.builder().check(true).information(user.get()).build();
+        // assertOptionalPresent 대신 isOptionalPresent 사용
+        DefaultAssert.isOptionalPresent(user); // 수정된 코드
+        ApiResponse apiResponse = ApiResponse.builder()
+                .check(true)
+                .information(user.get())
+                .build();
         return ResponseEntity.ok(apiResponse);
     }
 }

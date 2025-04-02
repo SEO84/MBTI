@@ -9,13 +9,12 @@ public class TokenMapping {
     private String accessToken;
     private String refreshToken;
 
-    public TokenMapping(){}
+    public TokenMapping() {}
 
     @Builder
-    public TokenMapping(String userEmail, String accessToken, String refreshToken){
+    public TokenMapping(String userEmail, String accessToken, String refreshToken) {
         this.userEmail = userEmail;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
-
 }
