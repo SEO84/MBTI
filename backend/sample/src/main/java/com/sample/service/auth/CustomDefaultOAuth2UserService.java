@@ -52,22 +52,23 @@ public class CustomDefaultOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
-        // 네이버에서 이름이 null 또는 빈 문자열일 경우 이메일 또는 기본값을 사용하도록 대체
         String name = oAuth2UserInfo.getName();
-        if (name == null || name.trim().isEmpty()) {
-            // 또는 "Unknown User"와 같은 기본 문자열로 지정할 수 있습니다.
+        if(name == null || name.trim().isEmpty()){
+            // 이름이 없을 경우 이메일을 대체하거나 기본값을 지정
             name = oAuth2UserInfo.getEmail();
+            // 또는 name = "Unknown User";
         }
         User user = User.builder()
                 .provider(Provider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))
                 .providerId(oAuth2UserInfo.getId())
-                .name(name)
+                .name(name) // null이 아닌 값을 할당
                 .email(oAuth2UserInfo.getEmail())
                 .imageUrl(oAuth2UserInfo.getImageUrl())
                 .role(Role.USER)
                 .build();
         return userRepository.save(user);
     }
+
 
 
     private User updateExistingUser(User user, OAuth2UserInfo oAuth2UserInfo) {
